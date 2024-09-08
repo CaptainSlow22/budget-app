@@ -1,3 +1,5 @@
+import Navbar from "@/components/Navbar";
+import NavbarMobile from "@/components/NavbarMobile";
 import { ReactNode } from "react";
 
 interface LayoutProps {
@@ -7,7 +9,15 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
     return (
       <>
-        <main>{children}</main>
+        <div className="fixed md:w-64 hidden md:block ">
+          <Navbar />
+        </div>
+        <div className="fixed block md:hidden ">
+          <NavbarMobile />
+        </div>
+        <div className="md:ml-64">
+          {children}
+        </div>
       </>
     )
   }
