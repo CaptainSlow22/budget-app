@@ -110,7 +110,7 @@ const IncomesPage = () => {
                     <div className="mt-2">
                       <h2 className="text-black font-medium my-1">Income Name</h2>
                       <Input
-                        placeholder="e.g. Home Decor"
+                        placeholder="e.g. Job Salary"
                         onChange={(e) => setName(e.target.value)}
                       />
                     </div>

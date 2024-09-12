@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSession } from 'next-auth/react';
 import BudgetCard from '@/components/BudgetCard';
+import Link from 'next/link';
 
 interface Budget {
   _id: string,
@@ -61,7 +62,7 @@ const BudgetsPage = () => {
     if (!userId) return;
       const fetchBudgets = async () => {
         try {
-          const res = await fetch(`/api/get/getBudgets/${userId}`);
+          const res = await fetch(`/api/get/getBudgets?userId=${userId}`);
           if(!res.ok) {
             throw new Error("Network response error");
           }
@@ -139,7 +140,7 @@ const BudgetsPage = () => {
               </DialogContent>
             </Dialog>
             {budgets.map((budget) => (
-              <BudgetCard key={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount}/>
+              <Link href={`/dashboard/budgets/${budget._id}`}><BudgetCard key={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount}/></Link>
             ))}
         </div>
     </div>
