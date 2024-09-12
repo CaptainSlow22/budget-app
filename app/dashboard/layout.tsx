@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import NavbarMobile from "@/components/NavbarMobile";
+import { Toaster } from "@/components/ui/toaster";
 import { ReactNode } from "react";
 
 interface LayoutProps {
@@ -17,6 +18,7 @@ export default function Layout({ children }: LayoutProps) {
         </div>
         <div className="md:ml-64">
           {children}
+          <Toaster/>
         </div>
       </>
     )
