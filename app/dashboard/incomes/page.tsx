@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSession } from 'next-auth/react';
 import IncomeCard from '@/components/IncomeCard';
+import { useToast } from '@/hooks/use-toast';
 
 interface Income {
   _id: string,
@@ -32,6 +33,21 @@ const IncomesPage = () => {
    const {data : session} = useSession();
    const [incomes, setIncomes] = useState<Income[]>([]);
    const userId = session?.user?.id;
+   const {toast} = useToast();
+
+   const fetchIncomes = async () => {
+    try {
+      const res = await fetch(`/api/get/getIncomes/${userId}`);
+      if(!res.ok) {
+        throw new Error("Network response error");
+      }
+      const data = await res.json();
+      const inc: Income[] = data.incomes;
+      setIncomes(inc.reverse());
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
    const createIncome = async () => {
       
@@ -52,27 +68,34 @@ const IncomesPage = () => {
           icon
         })
       })
+      if(res.ok) {
+        fetchIncomes();
+      }
     } catch(error) {
       console.log(error)
     }
  }
 
- useEffect(() => {
-    if (!userId) return;
-      const fetchIncomes = async () => {
-        try {
-          const res = await fetch(`/api/get/getIncomes/${userId}`);
-          if(!res.ok) {
-            throw new Error("Network response error");
-          }
-          const data = await res.json();
-          const inc: Income[] = data.incomes;
-          setIncomes(inc.reverse());
-        } catch(error) {
-          console.log(error);
-        }
+ const deleteIncome = async (incomeId: string) => {
+    try {
+      const res = await fetch(`/api/delete/deleteIncome/${incomeId}`, {
+        method: "DELETE"
+      });
+
+      if(res.ok) {
+        toast({description: "Income deleted"})
+        setIncomes((prevIncomes) => prevIncomes.filter((income) => income._id != incomeId))
+      } else {
+        console.log("Failed to delete income");
       }
-      fetchIncomes();
+
+    } catch(error) {
+      console.log(error);
+    }
+ }
+
+ useEffect(() => {
+    fetchIncomes();
    },[userId])
 
   return (
@@ -139,7 +162,8 @@ const IncomesPage = () => {
               </DialogContent>
             </Dialog>
             {incomes.map((income) => (
-              <IncomeCard key={income._id} icon={income.icon} name={income.name} amount={income.amount}/>
+              <IncomeCard key={income._id} icon={income.icon} name={income.name} amount={income.amount} onDelete={() => deleteIncome(income._id)}/>
+
             ))}
         </div>
     </div>

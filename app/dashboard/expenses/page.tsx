@@ -10,6 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useSession } from 'next-auth/react';
+import { useToast } from '@/hooks/use-toast';
 
 interface Expense {
     _id: string;
@@ -24,13 +25,14 @@ const ExpensesPage = () => {
     const [loading, setLoading] = useState(true);
     const { data: session } = useSession();
     const userId = session?.user?.id;
+    const {toast} = useToast();
 
     useEffect(() => {
         if (!userId) return;
         
         const fetchExpenses = async () => {
             try {
-                const res = await fetch(`/api/get/getExpenses/${userId}`);
+                const res = await fetch(`/api/get/getExpenses?userId=${userId}`);
                 if (!res.ok) {
                     throw new Error("Network response error");
                 }
@@ -54,6 +56,7 @@ const ExpensesPage = () => {
             });
 
             if (res.ok) {
+                toast({description: "Expense deleted"});
                 setExpenses((prevExpenses) => prevExpenses.filter((expense) => expense._id !== expenseId));
             } else {
                 console.log("Failed to delete expense");

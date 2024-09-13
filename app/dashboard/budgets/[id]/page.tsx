@@ -1,6 +1,7 @@
 "use client";
 import BudgetCard from '@/components/BudgetCard';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
@@ -20,6 +21,7 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
   const { toast } = useToast();
+  const [expenseAdded, setExpenseAdded] = useState(false); 
 
   const router = useRouter();
 
@@ -46,12 +48,36 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
         if (res.ok) {
             const form = e.target;
             form.reset();
-            toast({description: "Expense added."})
+            toast({ description: "Expense added" });
+            setExpenseAdded(!expenseAdded);  
         } else {
-            console.log("Add Recipe failed.");
+            console.log("Add Expense failed.");
         }
     } catch(error) {
         console.log(error);
+    }
+  }
+
+  const editBudget = async (newAmount: string) => {
+    try {
+      const res = await fetch(`/api/put/updateBudget/${id}`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: newAmount }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update budget');
+      }
+
+      const updatedBudget = await res.json();
+      setBudget(updatedBudget);
+      router.refresh();
+      toast({ description: "Budget edited" });
+    } catch(error) {
+      console.log(error);
     }
   }
 
@@ -63,6 +89,7 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
 
         if(res.ok) {
             router.push("/dashboard/budgets");
+            toast({ description: "Budget deleted" });
         } else {
             console.log("Failed to delete budget");
         }
@@ -89,16 +116,52 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
     fetchBudget();
   }, [id]);
 
+
   if (!budget) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="p-4">
-      <h1 className='font-bold text-4xl'>Budget Info</h1>
-      <div className='mt-4 p-4 flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:space-x-4'>
+      <h1 className='font-bold text-4xl'>Add Expenses</h1>
+      <div className='p-4 flex justify-center lg:justify-end space-x-4'>
+        <Dialog>
+            <DialogTrigger asChild>
+              <div className='mt-4 bg-blue-600 px-4 py-2 text-white font-bold rounded-full inline-block hover:bg-blue-400'>Edit</div>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit Budget Amount</DialogTitle>
+                <DialogDescription>
+                  <div className="mt-2">
+                    <h2 className="text-black font-medium my-1">Amount</h2>
+                    <Input
+                      placeholder="e.g. 5000$"
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button
+                    disabled={!amount}
+                    onClick={() => editBudget(amount)}
+                    className="mt-5 w-full rounded-full"
+                  >
+                    Edit Budget
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+        </Dialog>
+        <div className='flex mt-4 justify-center'>
+          <button onClick={deleteBudget} className='px-4 py-2 font-bold bg-red-600 text-white rounded-full hover:bg-red-400'>Delete</button>
+        </div>
+      </div>
+      <div className='mt-4 p-4 flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:space-x-8'>
         <div className='w-full lg:w-1/2'>
-            <BudgetCard icon={budget.icon} name={budget.name} amount={budget.amount} />
+            <BudgetCard _id={id} icon={budget.icon} name={budget.name} amount={budget.amount} expenseAdded={expenseAdded} />
         </div>
         <div className='w-full lg:w-1/2'>
             <form onSubmit={createExpense} className="bg-gray-100 shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4">
@@ -131,9 +194,6 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
                 </div>
             </form>
         </div>
-      </div>
-      <div className='flex mt-4 justify-center'>
-        <button onClick={deleteBudget} className='px-4 py-2 font-bold bg-red-600 text-white rounded-full'>Delete Budget</button>
       </div>
     </div>
   );
