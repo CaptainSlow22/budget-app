@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="bg-gradient-to-b from-gray-700 to-black min-h-screen flex flex-col">
-      <div className="p-4 md:p-6 bg-gray-900 shadow-lg">
+      <div className="p-4 md:p-6 bg-gray-800 shadow-lg">
         <h1 className="text-white font-black text-xl">BudgetWise</h1>
       </div>
       <div className="flex-1 p-16">
@@ -16,14 +16,12 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row lg:-mt-20 justify-center items-center">
           <div className="block md:hidden">
             <Spline
-              scene="https://draft.spline.design/ayzz204SAze1i0ZE/scene.splinecode"
-              
+              scene="https://draft.spline.design/TJ-ZHPDT8cRgS8CP/scene.splinecode"
             />
           </div>
           <div className="hidden md:block">
             <Spline
-              scene="https://draft.spline.design/KcfGdP9vWlXPcC61/scene.splinecode"
-              
+              scene="https://draft.spline.design/0XQOEROgH7Nu3DoO/scene.splinecode"
             />
           </div>
           <div>
@@ -35,7 +33,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <footer className="bg-gray-900 p-6">
+      <footer className="bg-gray-950 p-6">
         <div className="container mx-auto text-center">
           <div className="flex justify-center space-x-6 mb-4">
             <Link href="#" className="text-white hover:text-blue-400">About</Link>
