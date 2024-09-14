@@ -69,7 +69,6 @@ const BudgetsPage = () => {
       });
 
       if (res.ok) {
-        // Refetch the budgets after successfully creating a new one
         fetchBudgets();
       }
     } catch (error) {
@@ -146,7 +145,7 @@ const BudgetsPage = () => {
         </Dialog>
         {budgets.map((budget) => (
           <Link href={`/dashboard/budgets/${budget._id}`} key={budget._id}>
-            <BudgetCard _id={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount} />
+            <BudgetCard _id={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount} expenseAdded />
           </Link>
         ))}
       </div>
