@@ -5,7 +5,7 @@ import {
   PiggyBank,
   ReceiptText,
   CircleDollarSign,
-  LogOut
+  LogOut,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -38,6 +38,7 @@ function SideNav() {
       path: "/dashboard/expenses",
     },
   ];
+
   const path = usePathname();
 
   useEffect(() => {
@@ -45,23 +46,28 @@ function SideNav() {
   }, [path]);
 
   return (
-    <div className="relative h-screen justify-between border shadow-sm">
-      {/* Navigation Links - Centered and Positioned at the Bottom */}
-      <div className="absolute bottom-0 w-screen bg-white flex justify-center p-2">
-        <div className="flex flex-row gap-3">
-          {menuList.map((menu) => (
-            <Link href={menu.path} key={menu.id}>
-              <h2
-                className={`flex items-center text-gray-500 font-medium p-3 cursor-pointer rounded-full hover:text-primary hover:bg-blue-100 ${
-                  path == menu.path && "text-primary bg-blue-100"
-                }`}
-              >
-                <menu.icon />
-              </h2>
-            </Link>
-          ))}
-            <button className="text-gray-500 font-medium p-3" onClick={() => signOut({callbackUrl: "/", redirect: true})}><LogOut/></button>
-        </div>
+    <div
+      className="fixed bottom-0 left-0 w-full bg-white flex justify-center p-2 shadow-lg"
+      style={{ zIndex: 50 }} // Ensuring the SideNav has a higher z-index
+    >
+      <div className="flex flex-row gap-3">
+        {menuList.map((menu) => (
+          <Link href={menu.path} key={menu.id}>
+            <h2
+              className={`flex items-center text-gray-500 font-medium p-3 cursor-pointer rounded-full hover:text-primary hover:bg-blue-100 ${
+                path == menu.path && "text-primary bg-blue-100"
+              }`}
+            >
+              <menu.icon />
+            </h2>
+          </Link>
+        ))}
+        <button
+          className="text-gray-500 font-medium p-3"
+          onClick={() => signOut({ callbackUrl: "/", redirect: true })}
+        >
+          <LogOut />
+        </button>
       </div>
     </div>
   );

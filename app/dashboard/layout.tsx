@@ -13,10 +13,10 @@ export default function Layout({ children }: LayoutProps) {
         <div className="fixed md:w-64 hidden md:block ">
           <Navbar />
         </div>
-        <div className="fixed block md:hidden ">
+        <div className="absolute block md:hidden ">
           <NavbarMobile />
         </div>
-        <div className="md:ml-64">
+        <div className="mb-16 md:mb-0 md:ml-64">
           {children}
           <Toaster/>
         </div>
