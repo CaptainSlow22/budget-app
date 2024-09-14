@@ -6,7 +6,7 @@ import { compare } from "bcryptjs";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: async ({ user, token }: { user?: { id: string }; token: JWT }) => {
       if (user) {
-        token.uid = user.id; 
+        token.uid = user.id;
       }
       return token;
     },
@@ -73,4 +73,4 @@ export const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export { handler as default };
