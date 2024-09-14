@@ -25,7 +25,7 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
 
   const router = useRouter();
 
-  const createExpense = async (e: any) => {
+  const createExpense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if(!name || !amount) {
@@ -46,7 +46,7 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
             }),
         });
         if (res.ok) {
-            const form = e.target;
+            const form = e.target as HTMLFormElement;
             form.reset();
             toast({ description: "Expense added" });
             setExpenseAdded(!expenseAdded);  
@@ -120,6 +120,8 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
   if (!budget) {
     return <div>Loading...</div>;
   }
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="p-4">

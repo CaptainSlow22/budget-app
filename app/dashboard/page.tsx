@@ -37,7 +37,6 @@ const Dashboard = () => {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [advice, setAdvice] = useState<string | null>("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const userId = session?.user?.id;
@@ -73,8 +72,8 @@ const Dashboard = () => {
       const data = await res.json();
       const exp: Expense[] = data.expenses;
       setExpenses(exp.reverse());
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -102,8 +101,8 @@ const Dashboard = () => {
         setUser(userData);
 
         await Promise.all([fetchBudgets(userId), fetchIncomes(userId), fetchExpenses(userId)]);
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -117,7 +116,7 @@ const Dashboard = () => {
   const totalSpent = getTotalSpent();
 
   const latestExpenses = expenses.slice(0, 5);
-  const latestBudgets = budgets.slice(0,5);
+  const latestBudgets = budgets.slice(0,3);
 
   useEffect(() => {
     const fetchAdvice = async () => {
@@ -131,7 +130,6 @@ const Dashboard = () => {
   }, [totalBudget, totalSpent, totalIncome]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className='p-4'>
@@ -173,7 +171,7 @@ const Dashboard = () => {
             <h2 className='font-bold text-4xl'>Latest Budgets</h2>
             <div className='overflow-y-auto mt-4 p-4 h-[350px] space-y-2'>
                 {latestBudgets.map((budget) => (
-                  <BudgetCard _id={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount} expenseAdded />
+                  <BudgetCard key={budget._id} _id={budget._id} icon={budget.icon} name={budget.name} amount={budget.amount} expenseAdded />
                 ))}
             </div>
           </div>

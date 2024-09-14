@@ -12,7 +12,7 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -27,7 +27,7 @@ const LoginForm = () => {
         return;
       }
 
-      router.replace("dashboard");
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +56,7 @@ const LoginForm = () => {
                         )}
                       <button type="submit" className="w-full text-white bg-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Log In</button>
                       <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                          Don't have an account? <Link className="underline" href={"/register"}>Register</Link>
+                          Don&apos;t have an account? <Link className="underline" href={"/register"}>Register</Link>
                       </p>
                   </form>
               </div>

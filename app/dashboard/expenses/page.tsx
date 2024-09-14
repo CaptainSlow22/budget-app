@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -21,7 +20,6 @@ interface Expense {
 
 const ExpensesPage = () => {
     const [expenses, setExpenses] = useState<Expense[]>([]);
-    const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const { data: session } = useSession();
     const userId = session?.user?.id;
@@ -39,8 +37,8 @@ const ExpensesPage = () => {
                 const data = await res.json();
                 const exp: Expense[] = data.expenses;
                 setExpenses(exp.reverse());  
-            } catch (error: any) {
-                setError(error.message);
+            } catch (error) {
+                console.log(error);
             } finally {
                 setLoading(false);
             }
@@ -67,7 +65,6 @@ const ExpensesPage = () => {
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="p-4">

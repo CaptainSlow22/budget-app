@@ -3,11 +3,6 @@ import Budget from '@/models/Budget';
 import { connectMongoDB } from '@/lib/mongodb';
 import { Types } from 'mongoose';
 
-interface QueryParams {
-  userId?: string;
-  id?: string;
-}
-
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
