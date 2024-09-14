@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Budget from '@/models/Budget'; 
 import { connectMongoDB } from '@/lib/mongodb'; 
-import mongoose from 'mongoose';
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params; 

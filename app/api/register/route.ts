@@ -1,9 +1,9 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/User";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { hashSync } from "bcryptjs";
 
-export async function POST(request: any) {
+export async function POST(request: NextRequest) {
         const {name, email, password} = await request.json();
         const hashedPassword = await hashSync(password, 10);
     try {

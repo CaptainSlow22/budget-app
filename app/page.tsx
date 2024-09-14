@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Spline from '@splinetool/react-spline/next';
 import Link from "next/link";
 

@@ -98,6 +98,9 @@ const IncomesPage = () => {
     fetchIncomes();
    },[userId])
 
+
+   if (error) return <div>Error: {error}</div>;
+
   return (
     <div className='p-4'>
         <h1 className='font-bold text-4xl'>Your Incomes</h1>

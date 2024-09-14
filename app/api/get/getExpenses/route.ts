@@ -3,12 +3,6 @@ import Expense from '@/models/Expense';
 import Budget from '@/models/Budget';  
 import { connectMongoDB } from '@/lib/mongodb';
 
-interface QueryParams {
-    userId?: string;
-    budgetId?: string;
-}
-
-
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get('userId');

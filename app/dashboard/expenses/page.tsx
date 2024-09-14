@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -39,8 +38,8 @@ const ExpensesPage = () => {
                 const data = await res.json();
                 const exp: Expense[] = data.expenses;
                 setExpenses(exp.reverse());  
-            } catch (error: any) {
-                setError(error.message);
+            } catch (error) {
+                console.log(error);
             } finally {
                 setLoading(false);
             }
