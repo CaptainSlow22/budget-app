@@ -37,7 +37,6 @@ const Dashboard = () => {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [advice, setAdvice] = useState<string | null>("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
   const userId = session?.user?.id;
@@ -131,7 +130,6 @@ const Dashboard = () => {
   }, [totalBudget, totalSpent, totalIncome]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className='p-4'>
