@@ -57,7 +57,7 @@ const authOptions: NextAuthOptions = {
     },
     jwt: async ({ user, token }: { user?: { id: string }; token: JWT }) => {
       if (user) {
-        token.uid = user.id;
+        token.uid = user.id; 
       }
       return token;
     },
@@ -73,4 +73,4 @@ const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-export { handler as default };
+export { handler as GET, handler as POST };
