@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import DashboardCard from "@/components/DashboardCard";
-import { CircleDollarSign, PiggyBank, ReceiptText } from "lucide-react";
+import { CircleDollarSign, Loader, PiggyBank, ReceiptText } from "lucide-react";
 import { financialAdvice } from "@/lib/financialAdvice";
 import {
   Table,
@@ -172,7 +172,9 @@ const Dashboard = () => {
     loadingExpenses || 
     loading
   ) {
-    return <div>Loading...</div>;
+    return <div className="h-screen flex items-center justify-center">
+        <Loader className="text-blue-800" size={64}/>
+    </div>;
   }
 
   return (
@@ -183,7 +185,7 @@ const Dashboard = () => {
         <DashboardCard title="Total Spent" amount={totalSpent} Icon={ReceiptText} />
         <DashboardCard title="Total Income Streams" amount={totalIncome} Icon={CircleDollarSign} />
       </div>
-      <div className="p-4 mt-8 bg-gradient-to-br from-green-200 to-green-400  rounded-2xl">
+      <div className="p-4 mt-8 bg-gradient-to-bl from-green-400 to-green-200  rounded-2xl">
         <h2 className="text-4xl p-2 font-bold text-wrap">✨ BudgetWise AI Financial Advice</h2>
         <p className="font-bold p-6 text-md">{advice}</p>
       </div>
