@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useSession } from 'next-auth/react';
 import { useToast } from '@/hooks/use-toast';
+import { Loader } from 'lucide-react';
 
 interface Expense {
     _id: string;
@@ -64,7 +65,7 @@ const ExpensesPage = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className='h-screen flex items-center justify-center'><Loader className="text-blue-800" size={64}/></div>;
 
     return (
         <div className="p-4">

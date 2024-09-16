@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import DashboardCard from "@/components/DashboardCard";
-import { CircleDollarSign, PiggyBank, ReceiptText } from "lucide-react";
+import { CircleDollarSign, Loader, PiggyBank, ReceiptText } from "lucide-react";
 import { financialAdvice } from "@/lib/financialAdvice";
 import {
   Table,
@@ -172,7 +172,9 @@ const Dashboard = () => {
     loadingExpenses || 
     loading
   ) {
-    return <div>Loading...</div>;
+    return <div className="h-screen flex items-center justify-center">
+        <Loader className="text-blue-800" size={64}/>
+    </div>;
   }
 
   return (
