@@ -179,15 +179,15 @@ const Dashboard = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-4xl font-bold">👋 Hi, {user?.name}</h1>
+      <h1 className="text-4xl font-bold md:ml-10 md:mt-10">👋 Hi, {user?.name}</h1>
       <div className="flex flex-col lg:grid lg:grid-cols-3 mt-8 p-4 gap-10">
         <DashboardCard title="Total Budget" amount={totalBudget} Icon={PiggyBank} />
         <DashboardCard title="Total Spent" amount={totalSpent} Icon={ReceiptText} />
         <DashboardCard title="Total Income Streams" amount={totalIncome} Icon={CircleDollarSign} />
       </div>
-      <div className="p-4 mt-8 bg-gradient-to-bl from-green-400 to-green-200  rounded-2xl">
-        <h2 className="text-4xl p-2 font-bold text-wrap">✨ BudgetWise AI Financial Advice</h2>
-        <p className="font-bold p-6 text-md">{advice}</p>
+      <div className="p-4 mt-8 bg-gradient-to-bl from-orange-300 to-orange-100  rounded-2xl">
+        <h2 className="text-2xl md:text-4xl p-2 font-bold text-wrap">✨ BudgetWise AI Financial Advice</h2>
+        <p className="font-bold p-6 text-md text-gray-700">{advice}</p>
       </div>
       <div className="flex flex-col lg:flex-row">
         <div className="p-4 lg:w-1/2">

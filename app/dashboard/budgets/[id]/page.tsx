@@ -126,7 +126,7 @@ const BudgetItem = ({ params }: { params: { id: string } }) => {
   return (
     <div className="p-4">
       <h1 className='font-bold text-4xl'>Add Expenses</h1>
-      <div className='p-4 flex justify-center lg:justify-end space-x-4'>
+      <div className='p-4 flex justify-end space-x-4'>
         <Dialog>
             <DialogTrigger asChild>
               <div className='mt-4 bg-blue-600 px-4 py-2 text-white font-bold rounded-full inline-block hover:bg-blue-400'>Edit</div>
