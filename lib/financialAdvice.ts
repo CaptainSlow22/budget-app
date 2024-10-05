@@ -1,6 +1,6 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: `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`, dangerouslyAllowBrowser:true });
+const groq = new Groq({ apiKey: `${process.env.NEXT_PUBLIC_GROQ_API_KEY}`, dangerouslyAllowBrowser:true });
 
 interface Props {
     totalBudget: number;

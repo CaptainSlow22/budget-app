@@ -61,6 +61,10 @@ const LoginForm = () => {
                   </form>
               </div>
           </div>
+          <div className='mx-auto mt-3 font-bold'>
+          <p className="text-center">Testing credidentials:</p>
+          <p className="text-center">test@yahoo.com / test</p>
+      </div>
       </div>
     </section>
   )
